@@ -1,0 +1,70 @@
+#Reference, 1000 Genomes: /media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz
+
+
+#!/usr/bin/env bash
+
+# Example Run
+#/media/data1/Programs/CLAIR3_Pipe_v1.sh \
+#-S 677_Sample_3hr_EVLP_12_07_2021 \
+#-R /media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/Homo_sapiens.GRCh38.dna.primary_assembly.fa \
+#-I /media/data1/Experiments/anaylsis/677_Sample_3hr_EVLP_12_07_2021/677_miniknow_sorted_12_15_21_v1.bam \
+#-M /media/data1/Programs/Clair3/ont/model \
+#-O /media/data1/Experiments/anaylsis/677_Sample_3hr_EVLP_12_07_2021/Clair/ \
+#-B /media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000G_Split/
+
+#Defaults
+Reference_path=
+Sample=
+Input_path=
+Model_Path=
+chrom_list=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16" "17" "18" "19" "20" "21" "22" "X")
+Output_path=
+Bed_path=
+Help=
+
+while [ "$1" != "" ]; do
+	case $1 in
+		-R | --Reference )  shift
+			Reference_path=$1
+			;;
+		-S | --Sample )  shift
+			Sample=$1
+			;;
+		-I | --Input )  shift
+			Input_path=$1
+			;;
+		-M | --Model )  shift
+			Model_Path=$1
+			;;
+		-C | --chrom_list )  shift
+			chrom_list=("${chrom_list[@]}" $1)
+			;;
+		-O | --Output )  shift
+			Output_path=$1
+			;;
+		-B | --Bed )  shift
+			Bed_path=$1
+			;;
+		-h | --help )  shift
+			Help="TRUE"
+			;;
+	esac
+	shift
+done
+
+for chrom in ${chrom_list[@]}
+do
+
+	
+	python /home/minion/miniconda3/envs/clair-env/bin/clair.py callVarBam \
+		--chkpnt_fn ${Model_Path} \
+		--ref_fn ${Reference_path} \
+		--bam_fn ${Input_path} \
+		--sampleName ${Sample} \
+		--ctgName $chrom \
+		--call_fn ${Output_path}${Sample}_$chrom.vcf \
+		--bed_fn=${Bed_path}${chrom}.bed
+
+	done
+
+exit
