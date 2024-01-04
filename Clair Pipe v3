@@ -14,11 +14,12 @@ run_clair3.sh \
   --threads=14 \
   --platform="ont" \
   --sample_name=489_Sample_4hr_EVLP_11_08_2021 \
-  --qual=INT  \
   --print_ref_calls \
   --vcf_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz \
-  --model_path="/home/minion/miniconda3/envs/clair3/bin/models/" \
+  --model_path="/home/minion/miniconda3/envs/clair3/bin/models/ont" \
   --output=/media/data3/Genomics/Projects/Minion_Claire3/CLAIR3_489_Sample_4hr_EVLP_11_08_2021 
+
+  --qual=INT  \
 
 run_clair3.sh \
   --bam_fn=input.bam \                 ## change your bam file name here
