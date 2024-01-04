@@ -1,5 +1,32 @@
 #Reference, 1000 Genomes: /media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz
 
+/media/data1/Experiments/anaylsis/489_Sample_4hr_EVLP_11_08_2021/Megalodon/mappings.bam
+"/media/data1/Programs/Clair3/ont/model" 
+clair3/bin/models/
+
+conda activate clair3
+# run clair3 like this afterward
+MODEL_NAME="[YOUR_MODEL_NAME]"         # e.g. r941_prom_hac_g360+g422
+
+run_clair3.sh \
+  --bam_fn=/media/data1/Experiments/anaylsis/489_Sample_4hr_EVLP_11_08_2021/Megalodon/489_mappings_sorted.bam \
+  --ref_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/Homo_sapiens.GRCh38.dna.primary_assembly.fa \
+  --threads=14 \
+  --platform="ont" \
+  --sample_name=489_Sample_4hr_EVLP_11_08_2021 \
+  --qual=INT  \
+  --print_ref_calls \
+  --vcf_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz \
+  --model_path="/home/minion/miniconda3/envs/clair3/bin/models/" \
+  --output=/media/data3/Genomics/Projects/Minion_Claire3/CLAIR3_489_Sample_4hr_EVLP_11_08_2021 
+
+run_clair3.sh \
+  --bam_fn=input.bam \                 ## change your bam file name here
+  --ref_fn=ref.fa \                    ## change your reference file name here
+  --threads=${THREADS} \               ## maximum threads to be used
+  --platform="ont" \                   ## options: {ont,hifi,ilmn}
+  --model_path="${CONDA_PREFIX}/bin/models/${MODEL_NAME}" \ 
+  --output=${OUTPUT_DIR}               ## output path prefix 
 
 #!/usr/bin/env bash
 
