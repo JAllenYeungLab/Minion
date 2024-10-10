@@ -1,0 +1,104 @@
+# 730
+# For WGS filter out under 8 DP and QA fails, fitler 1000G as well
+/media/data3/Genomics/Programs/bcftools/bcftools isec \
+-O z \
+-n=2 \
+-p 1000_Genomes_PASS_All_AF_WGS_DP_8 \
+-i 'Filter="PASS"'  \
+M004HNG_07302.haplotype.biallelic.vcf.gz \
+-i 'Filter="."' \
+/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz
+
+# For CLAIR3 filter out AF < 1 and QA fails, fitler 1000G as well
+/media/data3/Genomics/Programs/bcftools/bcftools isec \
+-O z \
+-n=2 \
+-p 1000_Genome_Region_CLAIR3_HOMO_AF_Quality_Pass \
+-i 'FORMAT/DP>3 && FORMAT/AF>0.95 && FILTER="PASS"' \
+/media/data3/Genomics/Projects/MinION_Long_Read_Archive/730_Sample_4hr_EVLP_11_15_2021/Clair3/merge_output.vcf.gz \
+-i 'Filter="."' \
+/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz
+
+/media/data3/Genomics/Programs/bcftools/bcftools isec \
+-O z \
+-p 1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass \
+-i 'FORMAT/DP>7 && FORMAT/AF>0.95 && FILTER="PASS"' \
+1000_Genome_Region_CLAIR3_HOMO_AF_Quality_Pass/0000.vcf.gz \
+-i 'Filter="PASS"' \
+1000_Genomes_PASS_All_AF_WGS_DP_8/0000.vcf.gz
+
+# Homo in Nonopore and not called in WGS, FP
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'FORMAT/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0000.vcf.gz  | grep -v '^#' | wc -l
+
+# Hetero in WGS and Homo in Nano, FP
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF<0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0003.vcf.gz  | grep -v '^#' | wc -l
+
+#TP
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0003.vcf.gz  | grep -v '^#' | wc -l
+
+# FN
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0001.vcf.gz  | grep -v '^#' | wc -l
+
+rm -r 1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass
+
+
+# 490
+# For WGS filter out under 8 DP and QA fails, fitler 1000G as well
+/media/data3/Genomics/Programs/bcftools/bcftools isec \
+-O z \
+-n=2 \
+-p 1000_Genomes_PASS_All_AF_WGS_DP_8 \
+-i 'Filter="PASS"'  \
+M003HNG_04902.haplotype.biallelic.vcf.gz \
+-i 'Filter="."' \
+/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz
+
+# For CLAIR3 filter out AF < 1 and QA fails, fitler 1000G as well
+/media/data3/Genomics/Programs/bcftools/bcftools isec \
+-O z \
+-n=2 \
+-p 1000_Genome_Region_CLAIR3_HOMO_AF_Quality_Pass \
+-i 'FORMAT/DP>3 && FORMAT/AF>0.95 && FILTER="PASS"' \
+/media/data3/Genomics/Projects/MinION_Long_Read_Archive/490_Sample_4hr_v2_01_11_2022/Clair3/merge_output.vcf.gz \
+-i 'Filter="."' \
+/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz
+
+/media/data3/Genomics/Programs/bcftools/bcftools isec \
+-O z \
+-p 1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass \
+-i 'FORMAT/DP>7 && FORMAT/AF>0.95 && FILTER="PASS"' \
+1000_Genome_Region_CLAIR3_HOMO_AF_Quality_Pass/0000.vcf.gz \
+-i 'Filter="PASS"' \
+1000_Genomes_PASS_All_AF_WGS_DP_8/0000.vcf.gz
+
+# Homo in Nonopore and not called in WGS, FP
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'FORMAT/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0000.vcf.gz  | grep -v '^#' | wc -l
+
+# Hetero in WGS and Homo in Nano, FP
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF<0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0003.vcf.gz  | grep -v '^#' | wc -l
+
+#TP
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0003.vcf.gz  | grep -v '^#' | wc -l
+
+# FN
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0001.vcf.gz  | grep -v '^#' | wc -l
+
+rm -r 1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass
+
+grep -v '^##' /cluster/projects/lungtx/MOCHA/WGS/M0*/*/somatic/small/*.cleaned.vcf| awk '{if($0 ~ /\#CHROM/) d = $11 ; else split($11,a,":"); split(a[2],b,","); if(b[2] > 0) c=b[2]/(b[1]+b[2]) ; if(c > 0) print d, c }' >> MOCHA_AF_Oct_7_22.csv
