@@ -1,3 +1,34 @@
+zless 800_Sample_RefCall_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":"); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP' | head
+zless 800_Sample_RefCall_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":"); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP\t\t' | head
+
+zless 800_Sample_Homo_SNV_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":");split(a[4],b,","); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]"\t"b[1]"\t"b[2]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP\tRef\tAlt' | head
+zless 800_Sample_RefCall_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":");split(a[4],b,","); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]"\t"b[1]"\t"b[2]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP\tRef\tAlt' | head
+
+zless 487_Sample_Homo_SNV_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":");split(a[4],b,","); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]"\t"b[1]"\t"b[2]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP\tRef\tAlt' > 487_Sample_Homo_SNV_1000G.txt
+zless 487_Sample_RefCall_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":");split(a[4],b,","); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]"\t"b[1]"\t"b[2]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP\tRef\tAlt' > 487_Sample_RefCall_1000G.txt
+
+home/minion/miniconda3/envs/clair3/bin/run_clair3.sh 
+--bam_fn=/media/data1/Experiments/anaylsis/489_Sample_4hr_EVLP_11_08_2021/Megalodon/489_mappings_sorted.bam 
+--ref_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/Homo_sapiens.GRCh38.dna.primary_assembly.fa 
+--threads=14 --platform=ont --sample_name=489_Sample_4hr_EVLP_11_08_2021 
+--print_ref_calls 
+-vcf_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz 
+--model_path=/home/minion/miniconda3/envs/clair3/bin/models/ont 
+--output=/media/data3/Genomics/Projects/Minion_Claire3/CLAIR3_489_Sample_4hr_EVLP_11_08_2021
+
+/home/minion/miniconda3/envs/clair3/bin/run_clair3.sh 
+--bam_fn=/media/data3/Genomics/Projects/MinION_Long_Read_Archive/673_Sample_2hr_EVLP_01_28_2022/673_miniknow_sorted_02_01_22_v1.bam 
+--ref_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/Homo_sapiens.GRCh38.dna.primary_assembly.fa 
+--threads=14 --platform=ont --sample_name=673_Sample_2hr_EVLP_01_28_2022 
+--print_ref_calls 
+--vcf_fn=/media/data2/Genomics/Projects/Organoid_EAC/Reference/Reference/1000GENOMES-filtered.vcf.gz 
+--model_path=/home/minion/miniconda3/envs/clair3/bin/models/ont 
+--output=/media/data3/Genomics/Projects/Minion_Claire3/673_Sample_2hr_EVLP_01_28_2022
+
+/media/data3/Genomics/Programs/bcftools/bcftools view \
+-i 'INFO/AF>0.95' \
+1000_Genome_Region_CLAIR3_WGS_Overlap_HOMO_AF_Quality_Pass/0003.vcf.gz  | grep -v '^#' | wc -l
+
 # 730
 # For WGS filter out under 8 DP and QA fails, fitler 1000G as well
 /media/data3/Genomics/Programs/bcftools/bcftools isec \
