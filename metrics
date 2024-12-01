@@ -1,3 +1,20 @@
+bedtools intersect -header -wa -a <(zless full_alignment.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[3] > 3 && a[5] > 0.9 && $7 == "PASS") print}' ) -b <(zless pileup.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[3] > 3 && a[5] > 0.9 && $7 == "PASS") print}') | bgzip  > 403_Sample_Homo_SNV_1000G.vcf.gz
+zless merge_output.vcf.gz  | awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[3] > 3 && a[5] > 0.9 && $7 == "PASS") print}' | bgzip  > 403_Sample_Homo_SNV_1000G.vcf.gz
+bedtools intersect -header -wa -a <(zless full_alignment.vcf.gzz | awk -F '\t' '{if($0 ~ /\#/) print; if ( $7 == "RefCall") print}' ) -b <(zless pileup.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; if ( $7 == "RefCall") print}') | bgzip  > 487_Sample_RefCall_1000G.vcf.gz
+
+
+
+
+bedtools intersect -header -wa -a <(zless full_alignment.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[5] > 0.9 && $7 == "PASS") print}' ) -b <(zless pileup.vcf.gz |
+awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[5] > 0.9 && $7 == "PASS") print}') | bgzip  > 489_Sample_Homo_SNV_1000G.vcf.gz
+
+bedtools intersect -header -wa -a <(zless full_alignment.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; if ( $7 == "RefCall") print}' ) -b <(zless pileup.vcf.gz |
+awk -F '\t' '{if($0 ~ /\#/) print; if ( $7 == "RefCall") print}') | bgzip  > 730_Sample_RefCall_1000G.vcf.gz
+
+bedtools intersect -header -wa -a <(zless full_alignment.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[5] > 0.9 && $7 == "PASS") print}' ) -b <(zless pileup.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; else split($10,a,":"); if (a[5] > 0.9 && $7 == "PASS") print}') | bgzip  > 487_Sample_Homo_SNV_1000G.vcf.gz
+
+bedtools intersect -header -wa -a <(zless full_alignment.vcf.gzz | awk -F '\t' '{if($0 ~ /\#/) print; if ( $7 == "RefCall") print}' ) -b <(zless pileup.vcf.gz | awk -F '\t' '{if($0 ~ /\#/) print; if ( $7 == "RefCall") print}') | bgzip  > 487_Sample_RefCall_1000G.vcf.gz
+
 zless 800_Sample_RefCall_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":"); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP' | head
 zless 800_Sample_RefCall_1000G.vcf.gz | grep -v "^#" | awk '{split($10,a,":"); print $1 "\t" $2"\t" $4"\t" $5"\t" a[3]}' | sed -e '1i\#CHROM\tPOS\tREF\tALT\tDP\t\t' | head
 
